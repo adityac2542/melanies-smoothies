@@ -25,8 +25,6 @@ st.write(
 name_on_order = st.text_input('Name on the smoothie:')
 st.write('The name on the smoothie will be:',name_on_order)
 
-fv_df= st.dataframe(data=fruityvice_response.json(), use_container_width=True)
-
 cnx = st.connection("snowflake")
 session = cnx.session()
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
@@ -42,7 +40,7 @@ if ingredient_list:
     ingredients_string=""
     for ingredient in ingredient_list:
         ingredients_string+=ingredient + ' '
-
+        fv_df= st.dataframe(data=fruityvice_response.json(), use_container_width=True)
     #st.write(ingredients_string)
 
     my_insert_stmt = """ insert into smoothies.public.orders(ingredients,name_on_order) values ('""" + ingredients_string + """','"""+ name_on_order + """')"""
